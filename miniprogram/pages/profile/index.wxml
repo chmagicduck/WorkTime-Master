@@ -1,0 +1,8 @@
+<!-- pages/profile/index.wxml -->
+<view class="placeholder-page" style="padding-top: {{statusBarHeight}}px">
+  <view class="placeholder-content">
+    <text class="placeholder-icon">👤</text>
+    <text class="placeholder-title">工位存档</text>
+    <text class="placeholder-desc">用户配置（时薪、上下班时间、发薪日），敬请期待</text>
+  </view>
+</view>

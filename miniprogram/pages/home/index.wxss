@@ -1,0 +1,549 @@
+/* pages/home/index.wxss */
+
+/* ─── Page wrapper ─────────────────────────────────────────── */
+.page-wrapper {
+  background: #f1f5f9;
+  /* 高度由 JS 通过 style="height: {{pageHeight}}px" 注入，Skyline 不支持 vh 单位 */
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Header Area ───────────────────────────────────────────── */
+.header-area {
+  background: #f1f5f9;
+  flex-shrink: 0;
+}
+
+/* Header content row */
+.header-content {
+  height: 56px;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.7s ease;
+}
+
+.logo-icon--working {
+  background: linear-gradient(135deg, #2563eb 0%, #4338ca 100%);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+.logo-icon--fishing {
+  background: linear-gradient(135deg, #10b981 0%, #0d9488 100%);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+.logo-icon--overtime {
+  background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+}
+
+.logo-emoji {
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.header-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-name {
+  font-size: 14px;
+  font-weight: 900;
+  color: #1e293b;
+  line-height: 1;
+}
+
+.app-slogan {
+  font-size: 9px;
+  color: #94a3b8;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin-top: 4px;
+}
+
+/* ─── Content scroll ────────────────────────────────────────── */
+.content-scroll {
+  flex: 1;
+  overflow: hidden;
+}
+
+.content-inner {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ─── § 1 Countdown Card ────────────────────────────────────── */
+.countdown-card {
+  border-radius: 30px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.7s ease;
+}
+
+.card--working {
+  background: linear-gradient(135deg, #2563eb 0%, #4338ca 100%);
+  box-shadow: 0 16px 48px rgba(37, 99, 235, 0.25);
+}
+.card--fishing {
+  background: linear-gradient(135deg, #10b981 0%, #0d9488 100%);
+  box-shadow: 0 16px 48px rgba(16, 185, 129, 0.25);
+}
+.card--overtime {
+  background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+  box-shadow: 0 16px 48px rgba(249, 115, 22, 0.25);
+}
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.18), transparent 65%);
+}
+
+.countdown-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.label-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.countdown-label {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+}
+
+.end-time {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.countdown-display {
+  display: block;
+  font-size: 48px;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  text-align: center;
+  padding: 4px 0;
+  position: relative;
+  z-index: 1;
+  animation: countdown-tick 1s ease-in-out infinite;
+}
+
+.countdown-display--pulse {
+  transform: scale(1.03);
+  transition: transform 0.3s ease;
+}
+
+@keyframes countdown-tick {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.92; }
+}
+
+.countdown-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1rpx solid rgba(255, 255, 255, 0.12);
+  position: relative;
+  z-index: 1;
+}
+
+.hours-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.hours-clock {
+  font-size: 10px;
+  opacity: 0.55;
+}
+
+.hours-text {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.sys-badge {
+  background: rgba(0, 0, 0, 0.12);
+  padding: 2px 10px;
+  border-radius: 8px;
+}
+
+.sys-badge-text {
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ─── Grid Row (2-col) ──────────────────────────────────────── */
+.grid-row {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+/* ─── § 2 Earnings Cards ────────────────────────────────────── */
+.earnings-card {
+  flex: 1;
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 25px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  border: 1rpx solid #f8fafc;
+  position: relative;
+  overflow: hidden;
+}
+
+.earnings-bg-icon {
+  position: absolute;
+  right: -6px;
+  top: -6px;
+  font-size: 48px;
+  opacity: 0.05;
+}
+
+.earnings-label-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 6px;
+}
+
+.ping-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: ping 1.8s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes ping {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.4; }
+}
+
+.earnings-label {
+  font-size: 9px;
+  font-weight: 900;
+}
+.earnings-label--fish {
+  color: #059669;
+}
+.earnings-label--work {
+  color: #94a3b8;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.earnings-value-row {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.currency {
+  font-size: 12px;
+  font-weight: 500;
+  color: #1e293b;
+  opacity: 0.4;
+}
+
+.earnings-num {
+  font-size: 20px;
+  font-weight: 900;
+  color: #1e293b;
+}
+
+/* ─── § 3 Micro Cards ───────────────────────────────────────── */
+.micro-card {
+  flex: 1;
+  background: #ffffff;
+  padding: 14px;
+  border-radius: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  border: 1rpx solid #f8fafc;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.micro-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.micro-icon--orange { background: #ffedd5; }
+.micro-icon--indigo { background: #e0e7ff; }
+
+.micro-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.micro-label {
+  font-size: 9px;
+  color: #94a3b8;
+  font-weight: 900;
+  margin-bottom: 2px;
+}
+
+.micro-value-row {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.micro-value {
+  font-size: 14px;
+  font-weight: 900;
+  color: #1e293b;
+}
+
+.micro-unit {
+  font-size: 9px;
+  color: #94a3b8;
+}
+
+/* ─── § 4 Status Toggle Panel ───────────────────────────────── */
+.status-panel {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 30px;
+  border: 1rpx solid #f1f5f9;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.panel-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.panel-title {
+  font-size: 10px;
+  font-weight: 900;
+  color: #cbd5e1;
+  letter-spacing: 0.08em;
+}
+
+.status-badge {
+  padding: 2px 10px;
+  border-radius: 9999px;
+}
+
+.status-badge--working { background: #dbeafe; }
+.status-badge--working .status-badge-text { color: #2563eb; }
+
+.status-badge--fishing { background: #d1fae5; }
+.status-badge--fishing .status-badge-text { color: #059669; }
+
+.status-badge--overtime { background: #ffedd5; }
+.status-badge--overtime .status-badge-text { color: #ea580c; }
+
+.status-badge-text {
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.status-btns {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.status-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 0;
+  border-radius: 16px;
+  border: 1rpx solid #f1f5f9;
+  background: #ffffff;
+  transition: transform 0.1s ease;
+}
+
+.status-btn:active {
+  transform: scale(0.95);
+}
+
+.status-btn--fish-active {
+  background: #10b981;
+  border-color: #10b981;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+}
+
+.status-btn--ot-active {
+  background: #f97316;
+  border-color: #f97316;
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.3);
+}
+
+.status-btn--disabled {
+  opacity: 0.12;
+}
+
+.btn-emoji {
+  font-size: 18px;
+  color: #94a3b8;
+}
+
+.status-btn--fish-active .btn-emoji,
+.status-btn--fish-active .btn-text {
+  color: #ffffff;
+}
+
+.status-btn--ot-active .btn-emoji,
+.status-btn--ot-active .btn-text {
+  color: #ffffff;
+}
+
+.btn-text {
+  font-size: 12px;
+  font-weight: 900;
+  color: #94a3b8;
+}
+
+/* ─── § 5 Timeline Panel ────────────────────────────────────── */
+.timeline-panel {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 30px;
+  border: 1rpx solid #f8fafc;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.panel-subtitle {
+  font-size: 8px;
+  font-weight: 700;
+  color: #cbd5e1;
+}
+
+.timeline-bars {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 40px;
+  gap: 5px;
+  padding: 0 2px;
+}
+
+.timeline-bar {
+  flex: 1;
+  border-radius: 9999px;
+  min-height: 3px;
+}
+
+.bar--work     { background: rgba(37, 99, 235, 0.6); }
+.bar--fish     { background: #34d399; box-shadow: 0 0 6px rgba(52, 211, 153, 0.4); }
+.bar--overtime { background: #f97316; }
+.bar--rest     { background: #e2e8f0; }
+
+.timeline-ruler {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding: 8px 2px 0;
+  border-top: 1rpx solid #f8fafc;
+}
+
+.ruler-label {
+  font-size: 8px;
+  font-weight: 700;
+  color: #cbd5e1;
+}
+
+.timeline-legend {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding: 0 4px;
+}
+
+.legend-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.legend-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-dot--work     { background: rgba(37, 99, 235, 0.6); }
+.legend-dot--fish     { background: #34d399; }
+.legend-dot--overtime { background: #f97316; }
+.legend-dot--rest     { background: #e2e8f0; }
+
+.legend-text {
+  font-size: 8px;
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+/* ─── Bottom spacer ────────────────────────────────────────── */
+.bottom-spacer {
+  height: 100px;
+}

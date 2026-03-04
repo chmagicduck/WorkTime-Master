@@ -1,0 +1,208 @@
+
+  // 1. 引导页：欢迎时刻
+  const WelcomePage = () => (
+    <div className="flex flex-col h-full bg-slate-900 text-white p-8 justify-between animate-in fade-in duration-500">
+      <div className="mt-20">
+        <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-2xl shadow-blue-500/50">
+          <ShieldCheck size={32} />
+        </div>
+        <h1 className="text-4xl font-black tracking-tighter mb-4 leading-tight">
+          每一分钟<br/>的卖命，都应<br/>被精准记录
+        </h1>
+        <p className="text-slate-400 text-lg">让摸鱼变得体面，让加班更有痕迹。</p>
+      </div>
+      <button 
+        onClick={() => setPage('setup')}
+        className="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl font-black text-lg flex items-center justify-center gap-2 transition-all active:scale-95"
+      >
+        开启搬砖之旅 <ChevronRight size={20} />
+      </button>
+    </div>
+  );
+
+  // 2. 引导页：薪资信息设置
+  const SetupPage = () => (
+    <div className="flex flex-col h-full bg-white animate-in slide-in-from-right duration-500 overflow-y-auto">
+      <header className="px-6 pt-12 pb-6 flex items-center gap-2">
+        <button onClick={() => setPage('welcome')} className="p-2 -ml-2 text-slate-400"><ChevronLeft /></button>
+        <h2 className="text-xl font-black">建立收益模型</h2>
+      </header>
+      
+      <div className="flex-1 px-6 space-y-6 pb-10">
+        <div className="space-y-4">
+          <label className="block">
+            <span className="text-xs font-black text-slate-400 uppercase tracking-widest">月薪 (税前)</span>
+            <input 
+              type="number" 
+              className="w-full mt-2 p-4 bg-slate-50 rounded-2xl border-none focus:ring-2 focus:ring-blue-500 font-bold text-lg"
+              value={config.monthlySalary}
+              onChange={(e) => setConfig({...config, monthlySalary: e.target.value})}
+            />
+          </label>
+
+          <div className="grid grid-cols-2 gap-4">
+            <label>
+              <span className="text-xs font-black text-slate-400 uppercase tracking-widest">发薪日</span>
+              <select 
+                className="w-full mt-2 p-4 bg-slate-50 rounded-2xl border-none font-bold"
+                value={config.payDay}
+                onChange={(e) => setConfig({...config, payDay: e.target.value})}
+              >
+                {[...Array(31)].map((_, i) => <option key={i+1} value={i+1}>{i+1}号</option>)}
+              </select>
+            </label>
+            <label>
+              <span className="text-xs font-black text-slate-400 uppercase tracking-widest">工作日模式</span>
+              <select 
+                className="w-full mt-2 p-4 bg-slate-50 rounded-2xl border-none font-bold"
+                value={config.workMode}
+                onChange={(e) => setConfig({...config, workMode: e.target.value})}
+              >
+                <option>双休</option>
+                <option>周六休</option>
+                <option>周日休</option>
+                <option>大小周</option>
+              </select>
+            </label>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <label>
+              <span className="text-xs font-black text-slate-400 uppercase tracking-widest">上班时刻</span>
+              <input type="time" className="w-full mt-2 p-4 bg-slate-50 rounded-2xl border-none font-bold" value={config.startTime} />
+            </label>
+            <label>
+              <span className="text-xs font-black text-slate-400 uppercase tracking-widest">下班时刻</span>
+              <input type="time" className="w-full mt-2 p-4 bg-slate-50 rounded-2xl border-none font-bold" value={config.endTime} />
+            </label>
+          </div>
+
+          <div className="p-4 bg-blue-50 rounded-2xl flex items-center justify-between">
+            <div>
+              <p className="text-sm font-black text-blue-900">午休抵扣</p>
+              <p className="text-[10px] text-blue-600">非计薪时长，让统计更专业</p>
+            </div>
+            <input 
+              type="checkbox" 
+              checked={config.lunchBreak} 
+              onChange={() => setConfig({...config, lunchBreak: !config.lunchBreak})}
+              className="w-6 h-6 rounded-full text-blue-600"
+            />
+          </div>
+
+          {config.lunchBreak && (
+            <div className="grid grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2">
+              <input type="time" className="p-4 bg-slate-50 rounded-2xl border-none font-bold text-sm" value={config.lunchStart} />
+              <input type="time" className="p-4 bg-slate-50 rounded-2xl border-none font-bold text-sm" value={config.lunchEnd} />
+            </div>
+          )}
+        </div>
+
+        <button 
+          onClick={() => setPage('home')}
+          className="w-full bg-slate-900 text-white py-4 rounded-2xl font-black text-lg flex items-center justify-center gap-2 shadow-xl shadow-slate-200 active:scale-95 transition-all"
+        >
+          保存配置进入首页
+        </button>
+      </div>
+    </div>
+  );
+
+  // 3. 个人中心页
+  const ProfilePage = () => {
+    const [showResetConfirm, setShowResetConfirm] = useState(false);
+
+    return (
+      <div className="flex flex-col h-full bg-slate-50 animate-in fade-in duration-300">
+        <header className="px-6 pt-12 pb-6 flex items-center justify-between">
+          <h2 className="text-xl font-black">工位存档</h2>
+          <Settings size={20} className="text-slate-400" />
+        </header>
+
+        <div className="px-6 flex-1 space-y-6 overflow-y-auto">
+          {/* 个人名片 */}
+          <div className="bg-white p-6 rounded-[32px] shadow-sm border border-slate-100 flex items-center gap-4">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xl font-black">
+              牛
+            </div>
+            <div>
+              <p className="text-lg font-black text-slate-800">高级摸鱼执行官</p>
+              <div className="flex items-center gap-2 mt-1">
+                <span className="text-[10px] bg-emerald-100 text-emerald-600 px-2 py-0.5 rounded-full font-bold">等级 12</span>
+                <span className="text-[10px] text-slate-400">搬砖总额：¥24,203</span>
+              </div>
+            </div>
+          </div>
+
+          {/* 设置项列表 */}
+          <div className="space-y-3">
+            <button 
+              onClick={() => setPage('setup')}
+              className="w-full bg-white p-5 rounded-2xl flex items-center justify-between border border-slate-100 active:bg-slate-50 transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center"><TrendingUp size={18}/></div>
+                <span className="font-bold text-slate-700">收益设置</span>
+              </div>
+              <ChevronRight size={18} className="text-slate-300" />
+            </button>
+
+            <button 
+              onClick={() => setShowResetConfirm(true)}
+              className="w-full bg-white p-5 rounded-2xl flex items-center justify-between border border-slate-100 active:bg-red-50 transition-colors group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center"><Trash2 size={18}/></div>
+                <span className="font-bold text-red-600">清除全局数据</span>
+              </div>
+              <AlertTriangle size={18} className="text-red-200" />
+            </button>
+          </div>
+        </div>
+
+        {/* 底部导航栏 */}
+        <nav className="h-20 bg-white border-t border-slate-100 px-8 flex justify-around items-center">
+          <button onClick={() => setPage('home')} className="flex flex-col items-center gap-1 text-slate-300">
+            <TrendingUp size={22} />
+            <span className="text-[9px] font-bold">搞钱中心</span>
+          </button>
+          <button className="flex flex-col items-center gap-1 text-slate-300">
+            <BarChart3 size={22} />
+            <span className="text-[9px] font-bold">财富战报</span>
+          </button>
+          <button onClick={() => setPage('profile')} className="flex flex-col items-center gap-1 text-blue-600">
+            <User size={22} />
+            <span className="text-[9px] font-bold">工位存档</span>
+          </button>
+        </nav>
+
+        {/* 重置数据弹窗 */}
+        {showResetConfirm && (
+          <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-end p-6">
+            <div className="w-full bg-white rounded-[32px] p-8 animate-in slide-in-from-bottom duration-300">
+              <div className="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center text-red-500 mb-6">
+                <AlertTriangle size={32} />
+              </div>
+              <h3 className="text-2xl font-black text-slate-900 mb-2">清除所有痕迹？</h3>
+              <p className="text-slate-500 mb-8 leading-relaxed">此操作将删除您所有的薪资配置、摸鱼历史及统计数据。该操作不可撤销。</p>
+              <div className="flex flex-col gap-3">
+                <button 
+                  onClick={() => { setPage('welcome'); setShowResetConfirm(false); }}
+                  className="w-full py-4 bg-red-600 text-white rounded-2xl font-black"
+                >
+                  确定删除
+                </button>
+                <button 
+                  onClick={() => setShowResetConfirm(false)}
+                  className="w-full py-4 bg-slate-100 text-slate-500 rounded-2xl font-black"
+                >
+                  我再想想
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+        <div className="h-1.5 w-32 bg-slate-200 rounded-full mx-auto mb-2 shrink-0"></div>
+      </div>
+    );
+  };

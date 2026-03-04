@@ -1,0 +1,13 @@
+/* app.wxss - 全局样式重置 */
+page {
+  /* 必须设置 height: 100%，Skyline 才能正确计算子元素高度 */
+  height: 100%;
+  background: #f1f5f9;
+  font-family: -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+view, text, button, input {
+  box-sizing: border-box;
+}

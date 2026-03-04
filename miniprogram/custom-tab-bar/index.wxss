@@ -1,0 +1,43 @@
+/* custom-tab-bar/index.wxss */
+/*
+ * Skyline 不支持 position: fixed。
+ * custom-tab-bar 由微信框架统一定位到屏幕底部，组件内部无需自行定位。
+ */
+.tab-bar {
+  width: 100%;
+  height: 56px;
+  background: #ffffff;
+  border-top: 1rpx solid #f1f5f9;
+  display: flex;
+  flex-direction: row;
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding-bottom: 4px;
+}
+
+.tab-icon {
+  font-size: 22px;
+  opacity: 0.25;
+}
+
+.tab-label {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  color: #94a3b8;
+}
+
+.tab-item--active .tab-icon {
+  opacity: 1;
+}
+
+.tab-item--active .tab-label {
+  color: #10b981;
+}

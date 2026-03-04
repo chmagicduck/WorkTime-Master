@@ -1,0 +1,8 @@
+<!-- pages/report/index.wxml -->
+<view class="placeholder-page" style="padding-top: {{statusBarHeight}}px">
+  <view class="placeholder-content">
+    <text class="placeholder-icon">📊</text>
+    <text class="placeholder-title">财富战报</text>
+    <text class="placeholder-desc">历史工时与收益报表，敬请期待</text>
+  </view>
+</view>

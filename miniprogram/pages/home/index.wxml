@@ -1,0 +1,189 @@
+<!-- pages/home/index.wxml -->
+<view class="page-wrapper" style="height: {{pageHeight}}px">
+
+  <!-- ① Header Area (status bar + logo row) -->
+  <view class="header-area" style="padding-top: {{statusBarHeight}}px">
+    <view class="header-content">
+      <view class="header-left">
+        <view class="logo-icon logo-icon--{{status}}">
+          <text class="logo-emoji">🛡</text>
+        </view>
+        <view class="header-titles">
+          <text class="app-name">工时管理大师</text>
+          <text class="app-slogan">你的时间，值得被精准管理</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ② Scrollable Content -->
+  <scroll-view class="content-scroll" scroll-y="{{true}}" style="height: {{contentHeight}}px">
+    <view class="content-inner">
+
+      <!-- § 1 · Countdown card -->
+      <view class="countdown-card card--{{status}}">
+        <view class="card-overlay"></view>
+        <view class="countdown-header">
+          <view class="label-badge">
+            <text class="countdown-label">逃离办公室倒计时</text>
+          </view>
+          <text class="end-time">18:30 准时下班</text>
+        </view>
+        <text class="countdown-display {{pulse ? 'countdown-display--pulse' : ''}}">{{countdown}}</text>
+        <view class="countdown-footer">
+          <view class="hours-info">
+            <text class="hours-clock">⏰</text>
+            <text class="hours-text">今日已工位待命 {{todayHours}} 小时</text>
+          </view>
+          <view class="sys-badge">
+            <text class="sys-badge-text">{{statusText}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- § 2 · Earnings cards (2-col) -->
+      <view class="grid-row">
+
+        <!-- Fish earnings -->
+        <view class="earnings-card">
+          <text class="earnings-bg-icon">☕</text>
+          <view class="earnings-label-row">
+            <view class="ping-dot"></view>
+            <text class="earnings-label earnings-label--fish">今日摸鱼收益</text>
+          </view>
+          <view class="earnings-value-row">
+            <text class="currency">¥</text>
+            <text class="earnings-num">{{fishEarnings}}</text>
+          </view>
+        </view>
+
+        <!-- Work earnings -->
+        <view class="earnings-card">
+          <text class="earnings-label earnings-label--work">今日搬砖收益</text>
+          <view class="earnings-value-row">
+            <text class="currency">¥</text>
+            <text class="earnings-num">{{workEarnings}}</text>
+          </view>
+        </view>
+
+      </view>
+
+      <!-- § 3 · Micro countdown cards (2-col) -->
+      <view class="grid-row">
+
+        <!-- Days to salary -->
+        <view class="micro-card">
+          <view class="micro-icon micro-icon--orange">
+            <text>📅</text>
+          </view>
+          <view class="micro-info">
+            <text class="micro-label">距发薪日</text>
+            <view class="micro-value-row">
+              <text class="micro-value">{{daysToSalary}}</text>
+              <text class="micro-unit"> 天</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- Days to rest -->
+        <view class="micro-card">
+          <view class="micro-icon micro-icon--indigo">
+            <text>🌙</text>
+          </view>
+          <view class="micro-info">
+            <text class="micro-label">距休息日</text>
+            <view class="micro-value-row">
+              <text class="micro-value">{{daysToRest}}</text>
+              <text class="micro-unit"> 天</text>
+            </view>
+          </view>
+        </view>
+
+      </view>
+
+      <!-- § 4 · Status toggle panel -->
+      <view class="status-panel">
+        <view class="panel-header">
+          <text class="panel-title">状态切换控制</text>
+          <view class="status-badge status-badge--{{status}}">
+            <text class="status-badge-text">{{statusBadgeText}}</text>
+          </view>
+        </view>
+        <view class="status-btns">
+
+          <!-- Fishing toggle -->
+          <view
+            class="status-btn {{fishBtnClass}} {{!isWorkTime ? 'status-btn--disabled' : ''}}"
+            bindtap="toggleFishing"
+          >
+            <text class="btn-emoji">☕</text>
+            <text class="btn-text">进入摸鱼</text>
+          </view>
+
+          <!-- Overtime toggle -->
+          <view
+            class="status-btn {{otBtnClass}} {{isWorkTime ? 'status-btn--disabled' : ''}}"
+            bindtap="toggleOvertime"
+          >
+            <text class="btn-emoji">⚡</text>
+            <text class="btn-text">开始加班</text>
+          </view>
+
+        </view>
+      </view>
+
+      <!-- § 5 · 24-hour activity timeline -->
+      <view class="timeline-panel">
+        <view class="panel-header">
+          <text class="panel-title">24小时活动轨迹</text>
+          <text class="panel-subtitle">活跃度监控</text>
+        </view>
+
+        <!-- Bar chart -->
+        <view class="timeline-bars">
+          <view
+            wx:for="{{timelineData}}"
+            wx:key="index"
+            class="timeline-bar bar--{{item.type}}"
+            style="height: {{item.heightPercent}}%"
+          ></view>
+        </view>
+
+        <!-- Time ruler -->
+        <view class="timeline-ruler">
+          <text class="ruler-label">00</text>
+          <text class="ruler-label">06</text>
+          <text class="ruler-label">12</text>
+          <text class="ruler-label">18</text>
+          <text class="ruler-label">24</text>
+        </view>
+
+        <!-- Legend -->
+        <view class="timeline-legend">
+          <view class="legend-item">
+            <view class="legend-dot legend-dot--work"></view>
+            <text class="legend-text">工作</text>
+          </view>
+          <view class="legend-item">
+            <view class="legend-dot legend-dot--fish"></view>
+            <text class="legend-text">摸鱼</text>
+          </view>
+          <view class="legend-item">
+            <view class="legend-dot legend-dot--overtime"></view>
+            <text class="legend-text">加班</text>
+          </view>
+          <view class="legend-item">
+            <view class="legend-dot legend-dot--rest"></view>
+            <text class="legend-text">休息</text>
+          </view>
+        </view>
+
+      </view>
+
+      <!-- Bottom spacer for tab bar -->
+      <view class="bottom-spacer"></view>
+
+    </view>
+  </scroll-view>
+
+</view>

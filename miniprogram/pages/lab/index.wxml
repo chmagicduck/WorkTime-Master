@@ -1,0 +1,8 @@
+<!-- pages/lab/index.wxml -->
+<view class="placeholder-page" style="padding-top: {{statusBarHeight}}px">
+  <view class="placeholder-content">
+    <text class="placeholder-icon">🧪</text>
+    <text class="placeholder-title">实验室</text>
+    <text class="placeholder-desc">趣味功能与工具，敬请期待</text>
+  </view>
+</view>
