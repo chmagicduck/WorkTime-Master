@@ -47,6 +47,13 @@ Page({
   },
 
   onLoad() {
+    // 首次使用：引导页还没完成则跳转
+    const done = storage.get<boolean>(storage.KEYS.ONBOARDING_DONE)
+    if (!done) {
+      wx.redirectTo({ url: '/pages/onboarding/index' })
+      return
+    }
+
     const sysInfo = wx.getSystemInfoSync()
     const statusBarH = sysInfo.statusBarHeight || 44
     const windowH = sysInfo.windowHeight || 667
@@ -121,8 +128,13 @@ Page({
   refreshData() {
     const now = new Date()
     const isWorkTime = this.calcIsWorkTime(now)
-    const fishEarnings = storage.get<number>(storage.KEYS.TODAY_FISH_EARNINGS) || 0
-    const workEarnings = storage.get<number>(storage.KEYS.TODAY_WORK_EARNINGS) || 0
+
+    // 收益计算逻辑待确认后实现，暂用已完成段累计值 × 时薪估算
+    const hourlyWage = storage.get<number>(storage.KEYS.HOURLY_WAGE) || 0
+    const fishSeconds = storage.get<number>(storage.KEYS.TODAY_FISH_SECONDS) || 0
+    const workSeconds = storage.get<number>(storage.KEYS.TODAY_WORK_SECONDS) || 0
+    const fishEarnings = hourlyWage * fishSeconds / 3600
+    const workEarnings = hourlyWage * workSeconds / 3600
 
     this.setData({
       countdown: this.calcCountdown(now),

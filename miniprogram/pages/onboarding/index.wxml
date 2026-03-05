@@ -1,0 +1,192 @@
+<!-- pages/onboarding/index.wxml -->
+
+<!-- ══════════════════════════════════════════════════════════
+     STEP 1: WELCOME
+     ══════════════════════════════════════════════════════════ -->
+<view wx:if="{{step === 'welcome'}}"
+      class="welcome-page"
+      style="height: {{pageHeight}}px">
+
+  <!-- 顶部内容区 -->
+  <view class="welcome-top" style="padding-top: {{welcomeTopPadding}}px">
+    <view class="shield-wrap">
+      <text class="shield-emoji">🛡</text>
+    </view>
+    <text class="welcome-title">每一分钟的卖命，都应被精准记录</text>
+    <text class="welcome-subtitle">让摸鱼变得体面，让加班更有痕迹。</text>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="welcome-bottom">
+    <view class="btn-start" bindtap="goToSetup">
+      <text class="btn-start-text">开启搬砖之旅</text>
+      <text class="btn-start-arrow">›</text>
+    </view>
+  </view>
+
+</view>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     STEP 2: SETUP
+     ══════════════════════════════════════════════════════════ -->
+<view wx:if="{{step === 'setup'}}"
+      class="setup-page"
+      style="height: {{pageHeight}}px">
+
+  <!-- Header -->
+  <view class="setup-header" style="padding-top: {{setupHeaderPadding}}px">
+    <view class="back-btn" bindtap="onBack">
+      <text class="back-chevron">‹</text>
+    </view>
+    <text class="setup-title">建立收益模型</text>
+  </view>
+
+  <!-- 可滚动表单区 -->
+  <scroll-view class="form-scroll"
+               scroll-y
+               style="height: {{formContentHeight}}px">
+    <view class="form-inner">
+
+      <!-- § 月薪 -->
+      <view class="form-group">
+        <text class="form-label">月薪（税前）</text>
+        <input class="form-input"
+               type="digit"
+               placeholder="请输入月薪"
+               placeholder-class="input-placeholder"
+               value="{{monthlySalary}}"
+               bindinput="onSalaryInput" />
+      </view>
+
+      <!-- § 发薪日 + 工作日模式 -->
+      <view class="form-row-2">
+        <view class="form-group form-group--half">
+          <text class="form-label">发薪日</text>
+          <picker mode="selector"
+                  range="{{payDayRange}}"
+                  value="{{payDayIndex}}"
+                  bindchange="onPayDayChange">
+            <view class="picker-field">
+              <text class="picker-val">{{payDayRange[payDayIndex]}}</text>
+              <text class="picker-chevron">›</text>
+            </view>
+          </picker>
+        </view>
+        <view class="form-group form-group--half">
+          <text class="form-label">工作日模式</text>
+          <picker mode="selector"
+                  range="{{workModeRange}}"
+                  value="{{workModeIndex}}"
+                  bindchange="onWorkModeChange">
+            <view class="picker-field">
+              <text class="picker-val">{{workModeRange[workModeIndex]}}</text>
+              <text class="picker-chevron">›</text>
+            </view>
+          </picker>
+        </view>
+      </view>
+
+      <!-- § 上班时刻 + 下班时刻 -->
+      <view class="form-row-2">
+        <view class="form-group form-group--half">
+          <text class="form-label">上班时刻</text>
+          <picker mode="time"
+                  value="{{startTime}}"
+                  bindchange="onStartTimeChange">
+            <view class="picker-field">
+              <text class="picker-val">{{startTime}}</text>
+              <text class="picker-chevron">›</text>
+            </view>
+          </picker>
+        </view>
+        <view class="form-group form-group--half">
+          <text class="form-label">下班时刻</text>
+          <picker mode="time"
+                  value="{{endTime}}"
+                  bindchange="onEndTimeChange">
+            <view class="picker-field">
+              <text class="picker-val">{{endTime}}</text>
+              <text class="picker-chevron">›</text>
+            </view>
+          </picker>
+        </view>
+      </view>
+
+      <!-- § 午休抵扣开关 -->
+      <view class="toggle-card">
+        <view class="toggle-info">
+          <text class="toggle-title">午休抵扣</text>
+          <text class="toggle-desc">非计薪时长，让统计更专业</text>
+        </view>
+        <switch checked="{{lunchBreakEnabled}}"
+                bindchange="onLunchBreakToggle"
+                color="#2563eb" />
+      </view>
+
+      <!-- § 午休时间（条件展示） -->
+      <view wx:if="{{lunchBreakEnabled}}" class="form-row-2">
+        <view class="form-group form-group--half">
+          <text class="form-label">午休开始</text>
+          <picker mode="time"
+                  value="{{lunchStart}}"
+                  bindchange="onLunchStartChange">
+            <view class="picker-field">
+              <text class="picker-val">{{lunchStart}}</text>
+              <text class="picker-chevron">›</text>
+            </view>
+          </picker>
+        </view>
+        <view class="form-group form-group--half">
+          <text class="form-label">午休结束</text>
+          <picker mode="time"
+                  value="{{lunchEnd}}"
+                  bindchange="onLunchEndChange">
+            <view class="picker-field">
+              <text class="picker-val">{{lunchEnd}}</text>
+              <text class="picker-chevron">›</text>
+            </view>
+          </picker>
+        </view>
+      </view>
+
+      <!-- § 大小周选项（条件展示） -->
+      <view wx:if="{{workModeIndex === 3}}" class="alternate-section">
+        <text class="alternate-hint">请告诉我本周的排班</text>
+        <view class="form-row-2">
+          <view class="form-group form-group--half">
+            <text class="form-label">本周是</text>
+            <picker mode="selector"
+                    range="{{bigWeekRange}}"
+                    value="{{bigWeekIndex}}"
+                    bindchange="onBigWeekChange">
+              <view class="picker-field">
+                <text class="picker-val picker-val--sm">{{bigWeekRange[bigWeekIndex]}}</text>
+                <text class="picker-chevron">›</text>
+              </view>
+            </picker>
+          </view>
+          <view class="form-group form-group--half">
+            <text class="form-label">小周休息日</text>
+            <picker mode="selector"
+                    range="{{smallWeekRestDayRange}}"
+                    value="{{smallWeekRestDayIndex}}"
+                    bindchange="onSmallWeekRestDayChange">
+              <view class="picker-field">
+                <text class="picker-val">{{smallWeekRestDayRange[smallWeekRestDayIndex]}}</text>
+                <text class="picker-chevron">›</text>
+              </view>
+            </picker>
+          </view>
+        </view>
+      </view>
+
+      <!-- § 保存按钮 -->
+      <view class="btn-save" bindtap="saveConfig">
+        <text class="btn-save-text">保存配置进入首页</text>
+      </view>
+
+    </view>
+  </scroll-view>
+
+</view>
