@@ -24,10 +24,10 @@
       <view class="countdown-card card--{{status}}">
         <view class="card-overlay"></view>
         <view class="countdown-header">
-          <view class="label-badge">
-            <text class="countdown-label">逃离办公室倒计时</text>
+          <view class="label-badge" wx:if="{{countdownLabel}}">
+            <text class="countdown-label">{{countdownLabel}}</text>
           </view>
-          <text class="end-time">18:30 准时下班</text>
+          <text class="end-time">{{countdownEndInfo}}</text>
         </view>
         <text class="countdown-display {{pulse ? 'countdown-display--pulse' : ''}}">{{countdown}}</text>
         <view class="countdown-footer">
